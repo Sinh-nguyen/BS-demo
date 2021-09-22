@@ -57,7 +57,7 @@ public class StepDefs {
         caps.setCapability("name", "BS Test");
         try {
             WebDriver driver = new RemoteWebDriver(new URL(URL), caps);
-            driver.get("https://www.goo1gle.com");
+            driver.get("https://www.google.com");
             WebElement element = driver.findElement(By.name("q"));
             element.sendKeys("BrowserStack");
             element.submit();
