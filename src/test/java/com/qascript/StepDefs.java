@@ -21,6 +21,9 @@ public class StepDefs {
     String username = System.getenv("BROWSERSTACK_USERNAME");
     String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
     String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
+    String buildName = System.getenv("BROWSERSTACK_BUILD_NAME");
+    String browserstackLocal = System.getenv("BROWSERSTACK_LOCAL");
+    String browserstackLocalIdentifier = System.getenv("BROWSERSTACK_LOCAL_IDENTIFIER");
 
     @Given("Launch website")
     public void launchQAScript() {
@@ -39,9 +42,10 @@ public class StepDefs {
     }
 
     public static void markTestStatus(String status, String reason, WebDriver driver) {
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \""+status+"\", \"reason\": \""+reason+"\"}}");
-      }
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \""
+                + status + "\", \"reason\": \"" + reason + "\"}}");
+    }
 
     @Given("Launch website in BS")
     public void launchWebsiteInBS() {
@@ -51,10 +55,12 @@ public class StepDefs {
         caps.setCapability("resolution", "1920x1080");
         caps.setCapability("browser", "Chrome");
         caps.setCapability("browser_version", "latest");
-        caps.setCapability("build", "1.0");
+        caps.setCapability("build", buildName);
         caps.setCapability("browserstack.debug", "true");
         caps.setCapability("project", "Browserstack Demo");
         caps.setCapability("name", "BS Test");
+        caps.setCapability("browserstack.local", browserstackLocal);
+        caps.setCapability("browserstack.localIdentifier", browserstackLocalIdentifier);
         try {
             WebDriver driver = new RemoteWebDriver(new URL(URL), caps);
             driver.get("https://www.google.com");
