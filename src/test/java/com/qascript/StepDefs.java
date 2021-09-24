@@ -21,9 +21,6 @@ public class StepDefs {
     String username = System.getenv("BROWSERSTACK_USERNAME");
     String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
     String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
-    String buildName = System.getenv("BROWSERSTACK_BUILD_NAME");
-    String browserstackLocal = System.getenv("BROWSERSTACK_LOCAL");
-    String browserstackLocalIdentifier = System.getenv("BROWSERSTACK_LOCAL_IDENTIFIER");
 
     @Given("Launch website")
     public void launchQAScript() {
@@ -49,6 +46,10 @@ public class StepDefs {
 
     @Given("Launch website in BS")
     public void launchWebsiteInBS() {
+        String buildName = System.getenv("BROWSERSTACK_BUILD_NAME");
+        String browserstackLocal = System.getenv("BROWSERSTACK_LOCAL");
+        String browserstackLocalIdentifier = System.getenv("BROWSERSTACK_LOCAL_IDENTIFIER");
+        
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("os", "Windows");
         caps.setCapability("os_version", "10");
